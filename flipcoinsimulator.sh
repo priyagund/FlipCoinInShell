@@ -1,42 +1,40 @@
 #!/bin/bash -x
-HH=0
-HT=0
-TT=0
-TH=0
+echo "no of coin :coins"
+read coins
+echo "no of time flip coin:noOfFlip"
+read noOfFlip
+head=0
 tail=0
-countHead=0
-countTail=0
+headCount=0
+tailCount=0
 
-declare -A coins
-echo  "enter noOf time flipcoin"
-read flipcoin
-noOfTime=$flipcoin
-while  [ $flipcoin -gt 0 ]
- do
- ResultCheck1=$((RANDOM %2))
- ResultCheck2=$((RANDOM %2)) 
-   if [[ $ResultCheck1 -eq 0 && $ResultCheck2 -eq 0 ]]
+declare -A Coins
+function getCoin()
+{
+
+for (( i=1; i<=$noOfFlip; i++ ))
+do
+    str=""
+   for (( j=1; j<=$coins; j++ ))
+    do  
+      randomCheck=$(( RANDOM % 2 ))
+      if [ $randomCheck -eq 1 ]
       then 
-      coins[$((HH++))]="HeadHead"
-   elif [[ $ResultCheck1 -eq 0 && $ResultCheck2 -eq 1 ]]
-   then
-       coins[$((HT++))]="HeadTail"
-    
-   elif [[ $ResultCheck1 -eq 1 && $ResultCheck2 -eq 0 ]]
-   then
-       coins[$((TH++))]="TailHead"
-
-  else 
-    coins[[ $((countTail++)) ]]="TailTail"
-    
-  fi
-flipcoin=$(($flipcoin - 1))
+      	str=$str"H"
+      	((headCount++))
+      else 
+      	str=$str"T"
+      	((tailCount++))
+      fi
+    done
+echo final key : $str
+Coins["$str"]=$(( ${Coins["$str"]} + 1 ))   
 done
+}
 
-headHeadPer=$(($HH*100/$noOfTime))
-headTailPer=$(($HT*100/$noOfTime))
-TailHeadPer=$(($TH*100/$noOfTime))
-TailTailPer=$(($TT*100/$noOfTime))
-echo ${coins[@]}
+getCoin  
+echo "${!Coins[@]} : ${Coins[@]}"
 
-echo "HH % :$headHeadPer ,HT % :$headTailPer ,TH : $TailHeadPer ,TT % : $TailTailPer"
+
+
+
