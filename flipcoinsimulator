@@ -1,6 +1,6 @@
 #!/bin/bash -x
 Resultcheck=$((RANDOM % 2))
-if [ Resultcheck -eq 0]
+if [ $Resultcheck -eq 0]
 then
 echo "head"
 else 
