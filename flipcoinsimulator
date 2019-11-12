@@ -1,2 +1,8 @@
 #!/bin/bash -x
-welcome
+Resultcheck=$((RANDOM % 2))
+if [ Resultcheck -eq 0]
+then
+echo "head"
+else 
+echo  "tail"
+fi
