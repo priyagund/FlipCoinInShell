@@ -1,5 +1,8 @@
 #!/bin/bash -x
-head=1
+HH=0
+HT=0
+TT=0
+TH=0
 tail=0
 countHead=0
 countTail=0
@@ -10,21 +13,30 @@ read flipcoin
 noOfTime=$flipcoin
 while  [ $flipcoin -gt 0 ]
  do
- ResultCheck=$((RANDOM %2))
-
-   if [ $ResultCheck -eq 1 ]
+ ResultCheck1=$((RANDOM %2))
+ ResultCheck2=$((RANDOM %2)) 
+   if [[ $ResultCheck1 -eq 0 && $ResultCheck2 -eq 0 ]]
       then 
-      coins[$((countHead++))]="Head"
+      coins[$((HH++))]="HeadHead"
+   elif [[ $ResultCheck1 -eq 0 && $ResultCheck2 -eq 1 ]]
+   then
+       coins[$((HT++))]="HeadTail"
+    
+   elif [[ $ResultCheck1 -eq 1 && $ResultCheck2 -eq 0 ]]
+   then
+       coins[$((TH++))]="TailHead"
 
   else 
-    coins[$((countTail++))]="Tail"
+    coins[[ $((countTail++)) ]]="TailTail"
     
   fi
 flipcoin=$(($flipcoin - 1))
 done
 
-headPer=$(($countHead*100/$noOfTime))
-tailPer=$(($countTail*100/$noOfTime))
+headHeadPer=$(($HH*100/$noOfTime))
+headTailPer=$(($HT*100/$noOfTime))
+TailHeadPer=$(($TH*100/$noOfTime))
+TailTailPer=$(($TT*100/$noOfTime))
 echo ${coins[@]}
 
-echo "headPer :$headPer ,tailper :$tailPer"
+echo "HH % :$headHeadPer ,HT % :$headTailPer ,TH : $TailHeadPer ,TT % : $TailTailPer"
